@@ -1,0 +1,57 @@
+.cursor,
+.trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  border-radius: 50%;
+  opacity: 0;
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+  will-change: transform;
+}
+
+.cursor {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-cyan);
+  margin-left: -4px;
+  margin-top: -4px;
+  box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.trail {
+  width: 35px;
+  height: 35px;
+  margin-left: -17.5px;
+  margin-top: -17.5px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  background: rgba(0, 240, 255, 0.03);
+}
+
+/* Visible state */
+.cursor.visible,
+.trail.visible {
+  opacity: 1;
+}
+
+/* Hovering on interactive elements */
+.cursor.hovering {
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  margin-top: -2px;
+  background: var(--accent-violet);
+  box-shadow: 0 0 10px var(--accent-violet), 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.trail.hovering {
+  width: 55px;
+  height: 55px;
+  margin-left: -27.5px;
+  margin-top: -27.5px;
+  border-color: rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.04);
+}
+
+

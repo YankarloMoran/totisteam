@@ -1,0 +1,175 @@
+.projects {
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.projects::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Color accent bar at top */
+.accentBar {
+  height: 3px;
+  width: 100%;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.card:hover .accentBar {
+  opacity: 1;
+}
+
+/* Icon */
+.iconWrapper {
+  position: relative;
+  padding: 2rem 2rem 0;
+}
+
+.icon {
+  font-size: 2.5rem;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.iconGlow {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.card:hover .iconGlow {
+  opacity: 1;
+}
+
+/* Content */
+.cardContent {
+  padding: 1.25rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.projectSubtitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.projectTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.description {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 100px;
+  border: 1px solid;
+  letter-spacing: 0.02em;
+}
+
+/* Project link */
+.projectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  padding-top: 0.5rem;
+}
+
+.projectLink:hover {
+  gap: 0.75rem;
+}
+
+.projectLink svg {
+  transition: transform var(--transition-fast);
+}
+
+.projectLink:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Hover gradient overlay */
+.hoverGradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.card:hover .hoverGradient {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardContent {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+
+  .iconWrapper {
+    padding: 1.5rem 1.5rem 0;
+  }
+}
