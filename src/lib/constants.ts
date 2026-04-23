@@ -62,15 +62,15 @@ export const PROJECTS = [
     icon: "🧟",
   },
   {
-    id: "game2",
-    title: "Pixel Dungeon",
-    subtitle: "Juego Roguelike",
+    id: "jjk-clash",
+    title: "Ultimate JJK CLASH",
+    subtitle: "Cursed Expansion",
     description:
-      "Un roguelike con estilo pixel art donde exploras mazmorras generadas aleatoriamente. Combate por turnos, loot aleatorio y jefes desafiantes.",
-    url: "#",
-    color: "#ef4444",
-    tags: ["TypeScript", "Phaser.js", "Procedural Gen", "Pixel Art"],
-    icon: "⚔️",
+      "Juego de lucha 2D definitivo basado en el universo de Jujutsu Kaisen. Domina la energía maldita en duelos rítmicos estilo 'tug-of-war', despliega expansiones de dominio y sobrevive a enfrentamientos de alta intensidad.",
+    url: "https://jjk-cursed-clash.vercel.app/",
+    color: "#ec4899",
+    tags: ["Fighter", "Rhythm Mechanics", "WebGL 2.0", "Phaser 3"],
+    icon: "🔥",
   },
 ];
 
