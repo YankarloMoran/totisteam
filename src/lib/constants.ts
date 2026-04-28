@@ -60,6 +60,7 @@ export const PROJECTS = [
     color: "#8b5cf6",
     tags: ["Multiplayer", "Survival", "Cross-Platform", "WebGL"],
     icon: "🧟",
+    video: "/videos/nightfall.mp4",
   },
   {
     id: "jjk-clash",
@@ -71,6 +72,7 @@ export const PROJECTS = [
     color: "#ec4899",
     tags: ["Fighter", "Rhythm Mechanics", "WebGL 2.0", "Phaser 3"],
     icon: "🔥",
+    video: "/videos/jjk-clash.mp4",
   },
 ];
 
