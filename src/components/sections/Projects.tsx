@@ -8,8 +8,9 @@ import styles from "./Projects.module.css";
 
 function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hasVideo = 'video' in project && project.video;
 
-  const handleMouseEnter = () => {
+  const handleVideoEnter = () => {
     if (videoRef.current) {
       videoRef.current.play().catch(() => {
         // Ignore autoplay errors
@@ -17,10 +18,10 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
     }
   };
 
-  const handleMouseLeave = () => {
+  const handleVideoLeave = () => {
     if (videoRef.current) {
       videoRef.current.pause();
-      videoRef.current.currentTime = 0; // Optional: reset to start
+      videoRef.current.currentTime = 0;
     }
   };
 
@@ -32,41 +33,60 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
           "--project-color": project.color,
         } as React.CSSProperties
       }
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
-      {/* Video Background (lazy loaded, muted, loops, playsinline) */}
-      {'video' in project && project.video && (
-        <div className={styles.videoWrapper}>
-          <video
-            ref={videoRef}
-            src={project.video}
-            preload="none"
-            muted
-            loop
-            playsInline
-            className={styles.video}
-          />
-          <div className={styles.videoOverlay} style={{ background: `linear-gradient(to bottom, transparent 0%, var(--bg-card) 100%)` }} />
-        </div>
-      )}
-
       {/* Color accent bar */}
       <div
         className={styles.accentBar}
         style={{ background: project.color }}
       />
 
-      {/* Project icon */}
-      <div className={styles.iconWrapper}>
-        <span className={styles.icon}>{project.icon}</span>
+      {/* Video Preview Box OR Emoji Fallback */}
+      {hasVideo ? (
         <div
-          className={styles.iconGlow}
-          style={{
-            background: `radial-gradient(circle, ${project.color}20 0%, transparent 70%)`,
-          }}
-        />
-      </div>
+          className={styles.videoBox}
+          onMouseEnter={handleVideoEnter}
+          onMouseLeave={handleVideoLeave}
+        >
+          <video
+            ref={videoRef}
+            src={project.video}
+            preload="metadata"
+            muted
+            loop
+            playsInline
+            className={styles.video}
+          />
+          {/* Play icon overlay */}
+          <div className={styles.playOverlay}>
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              style={{ color: project.color }}
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          {/* Border glow */}
+          <div
+            className={styles.videoGlow}
+            style={{
+              boxShadow: `inset 0 0 0 1px ${project.color}30, 0 0 20px ${project.color}10`,
+            }}
+          />
+        </div>
+      ) : (
+        <div className={styles.iconWrapper}>
+          <span className={styles.icon}>{project.icon}</span>
+          <div
+            className={styles.iconGlow}
+            style={{
+              background: `radial-gradient(circle, ${project.color}20 0%, transparent 70%)`,
+            }}
+          />
+        </div>
+      )}
 
       {/* Content */}
       <div className={styles.cardContent}>
