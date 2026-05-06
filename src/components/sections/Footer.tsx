@@ -9,9 +9,17 @@ export default function Footer() {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
 
+  const handleBackToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const hero = document.getElementById("hero");
+    if (hero) {
+      hero.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer ref={sectionRef} className={styles.footer} id="contact">
-      {/* Aurora Borealis effect */}
+      {/* Aurora Borealis effect — enhanced */}
       <div className={styles.aurora}>
         <div className={styles.auroraLayer1} />
         <div className={styles.auroraLayer2} />
@@ -30,6 +38,20 @@ export default function Footer() {
             Estamos siempre abiertos a nuevas ideas, colaboraciones y
             oportunidades. ¡Contáctanos!
           </p>
+
+          {/* Animated CTA button */}
+          <div className={styles.ctaButtons} data-reveal>
+            <a href="mailto:totisteam@gmail.com" className={styles.ctaButton}>
+              <span className={styles.ctaButtonGlow} />
+              <span className={styles.ctaButtonText}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                Enviar Email
+              </span>
+            </a>
+          </div>
         </div>
 
         {/* Team links */}
@@ -84,10 +106,7 @@ export default function Footer() {
             <a
               href="#hero"
               className={styles.backToTopBtn}
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              onClick={handleBackToTop}
             >
               <svg
                 width="16"

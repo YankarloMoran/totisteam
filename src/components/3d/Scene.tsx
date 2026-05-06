@@ -18,8 +18,8 @@ export default function Scene() {
         height: "100%",
         pointerEvents: "none",
       }}
-      dpr={[1, 1.5]}
-      gl={{ antialias: true, alpha: true }}
+      dpr={[1, 1.2]}
+      gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
     >
       <Suspense fallback={null}>
         <ambientLight intensity={0.3} />
@@ -33,17 +33,17 @@ export default function Scene() {
           color="#00f0ff"
         />
         <HeroModel />
-        <FloatingParticles count={200} />
+        <FloatingParticles count={100} />
 
-        {/* Post-processing effects */}
-        <EffectComposer>
+        {/* Post-processing effects — reduced for performance */}
+        <EffectComposer multisampling={0}>
           <Bloom
-            luminanceThreshold={0.2}
+            luminanceThreshold={0.3}
             luminanceSmoothing={0.9}
-            intensity={0.8}
+            intensity={0.6}
             mipmapBlur
           />
-          <Vignette eskil={false} offset={0.1} darkness={0.6} />
+          <Vignette eskil={false} offset={0.1} darkness={0.5} />
         </EffectComposer>
       </Suspense>
     </Canvas>

@@ -1,29 +1,56 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { PROJECTS } from "@/lib/constants";
 import { useScrollReveal, useStaggerReveal } from "@/hooks/useScrollAnimations";
 import { useMagneticHover } from "@/hooks/useMagneticHover";
 import styles from "./Projects.module.css";
 
-function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: (typeof PROJECTS)[0];
+  index: number;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const hasVideo = 'video' in project && project.video;
+  const videoBoxRef = useRef<HTMLDivElement>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const hasVideo = "video" in project && project.video;
 
-  const handleVideoEnter = () => {
+  // Lazy load video when visible
+  useEffect(() => {
+    if (!hasVideo || !videoBoxRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVideoVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(videoBoxRef.current);
+    return () => observer.disconnect();
+  }, [hasVideo]);
+
+  const handleVideoEnter = useCallback(() => {
     if (videoRef.current) {
       videoRef.current.play().catch(() => {
         // Ignore autoplay errors
       });
     }
-  };
+  }, []);
 
-  const handleVideoLeave = () => {
+  const handleVideoLeave = useCallback(() => {
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
-  };
+  }, []);
 
   return (
     <div
@@ -34,28 +61,46 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
         } as React.CSSProperties
       }
     >
+      {/* Project number */}
+      <span className={styles.projectNumber}>
+        #{String(index + 1).padStart(2, "0")}
+      </span>
+
       {/* Color accent bar */}
       <div
         className={styles.accentBar}
-        style={{ background: project.color }}
+        style={{ background: `linear-gradient(90deg, ${project.color}, ${project.color}80)` }}
       />
 
       {/* Video Preview Box OR Emoji Fallback */}
       {hasVideo ? (
         <div
+          ref={videoBoxRef}
           className={styles.videoBox}
           onMouseEnter={handleVideoEnter}
           onMouseLeave={handleVideoLeave}
         >
-          <video
-            ref={videoRef}
-            src={project.video}
-            preload="metadata"
-            muted
-            loop
-            playsInline
-            className={styles.video}
-          />
+          {/* Shimmer placeholder */}
+          {!isVideoLoaded && (
+            <div className={styles.videoShimmer}>
+              <div className={styles.shimmerWave} />
+            </div>
+          )}
+
+          {/* Lazy loaded video */}
+          {isVideoVisible && (
+            <video
+              ref={videoRef}
+              src={project.video}
+              preload="metadata"
+              muted
+              loop
+              playsInline
+              className={styles.video}
+              onLoadedData={() => setIsVideoLoaded(true)}
+            />
+          )}
+
           {/* Play icon overlay */}
           <div className={styles.playOverlay}>
             <svg
@@ -68,6 +113,7 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
+
           {/* Border glow */}
           <div
             className={styles.videoGlow}
@@ -167,7 +213,11 @@ export default function Projects() {
   });
 
   return (
-    <section ref={sectionRef} className={`section ${styles.projects}`} id="projects">
+    <section
+      ref={sectionRef}
+      className={`section ${styles.projects}`}
+      id="projects"
+    >
       <div className="container">
         <div className="section-header" data-reveal>
           <span className="section-subtitle">Nuestros Proyectos</span>
@@ -183,8 +233,8 @@ export default function Projects() {
         </div>
 
         <div ref={gridRef} className={styles.grid}>
-          {PROJECTS.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {PROJECTS.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>

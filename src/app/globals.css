@@ -23,6 +23,7 @@
   --gradient-primary: linear-gradient(135deg, #00f0ff 0%, #8b5cf6 100%);
   --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
   --gradient-glow: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+  --gradient-rainbow: linear-gradient(90deg, #00f0ff, #8b5cf6, #ec4899, #f97316, #22c55e, #00f0ff);
 
   /* Text */
   --text-primary: #f0f0f5;
@@ -51,7 +52,7 @@
   --transition-slow: 800ms var(--ease-out-expo);
 
   /* Glassmorphism */
-  --glass-blur: 20px;
+  --glass-blur: 16px;
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.08);
 
@@ -97,7 +98,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: var(--z-behind);
-  opacity: 0.025;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   pointer-events: none;
@@ -170,13 +171,15 @@ a {
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: 20px;
-  transition: all var(--transition-normal);
+  transition: background var(--transition-normal),
+              border-color var(--transition-normal),
+              box-shadow var(--transition-normal);
+  position: relative;
 }
 
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(0, 240, 255, 0.15);
-  transform: translateY(-4px);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.3),
     0 0 40px rgba(0, 240, 255, 0.05);
@@ -196,8 +199,10 @@ a {
   width: 80px;
   height: 3px;
   background: var(--gradient-primary);
+  background-size: 200% 100%;
   border-radius: 100px;
   margin: 1rem 0 2rem;
+  animation: gradient-shift 3s ease-in-out infinite;
 }
 
 /* ---------- Section Header ---------- */
@@ -233,6 +238,19 @@ a {
   transition: all var(--transition-fast);
   position: relative;
   overflow: hidden;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-primary:hover::before {
+  transform: translateX(100%);
 }
 
 .btn-primary:hover {
@@ -310,6 +328,87 @@ a {
   }
 }
 
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes border-rotate {
+  0% {
+    --border-angle: 0deg;
+  }
+  100% {
+    --border-angle: 360deg;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.4), 0 0 80px rgba(0, 240, 255, 0.1);
+  }
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--tx, 50px), var(--ty, -80px)) scale(1.5);
+  }
+}
+
 /* ---------- Utility Classes ---------- */
 .animate-float {
   animation: float 6s ease-in-out infinite;
@@ -321,6 +420,10 @@ a {
 
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
 }
 
 /* ---------- Responsive ---------- */
@@ -366,5 +469,14 @@ a {
 @media (pointer: fine) {
   *, *::before, *::after {
     cursor: none !important;
+  }
+}
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

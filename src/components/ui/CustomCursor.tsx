@@ -1,48 +1,45 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./CustomCursor.module.css";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+  const mousePos = useRef({ x: 0, y: 0 });
+  const trailPos = useRef({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+
+  const animateTrail = useCallback(() => {
+    const trail = trailRef.current;
+    if (trail) {
+      trailPos.current.x += (mousePos.current.x - trailPos.current.x) * 0.15;
+      trailPos.current.y += (mousePos.current.y - trailPos.current.y) * 0.15;
+      trail.style.transform = `translate(${trailPos.current.x}px, ${trailPos.current.y}px)`;
+    }
+    rafRef.current = requestAnimationFrame(animateTrail);
+  }, []);
 
   useEffect(() => {
     // Don't show on touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const cursor = cursorRef.current;
-    const trail = trailRef.current;
-    if (!cursor || !trail) return;
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let trailX = 0;
-    let trailY = 0;
+    if (!cursor) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      mousePos.current.x = e.clientX;
+      mousePos.current.y = e.clientY;
       setIsVisible(true);
-
-      cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     };
 
     const handleMouseEnterInteractive = () => setIsHovering(true);
     const handleMouseLeaveInteractive = () => setIsHovering(false);
-
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
-
-    // Trail animation loop
-    const animateTrail = () => {
-      trailX += (mouseX - trailX) * 0.15;
-      trailY += (mouseY - trailY) * 0.15;
-      trail.style.transform = `translate(${trailX}px, ${trailY}px)`;
-      requestAnimationFrame(animateTrail);
-    };
 
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
@@ -57,9 +54,12 @@ export default function CustomCursor() {
       el.addEventListener("mouseleave", handleMouseLeaveInteractive);
     });
 
-    const animFrame = requestAnimationFrame(animateTrail);
+    // Start animation loop
+    rafRef.current = requestAnimationFrame(animateTrail);
 
     return () => {
+      // Properly cancel the RAF loop
+      cancelAnimationFrame(rafRef.current);
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
@@ -67,9 +67,8 @@ export default function CustomCursor() {
         el.removeEventListener("mouseenter", handleMouseEnterInteractive);
         el.removeEventListener("mouseleave", handleMouseLeaveInteractive);
       });
-      cancelAnimationFrame(animFrame);
     };
-  }, []);
+  }, [animateTrail]);
 
   return (
     <>

@@ -39,9 +39,9 @@ export default function HeroModel() {
   return (
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
       <group position={[1.5, 0, 0]}>
-        {/* Main Torus Knot */}
+        {/* Main Torus Knot — reduced geometry for performance */}
         <mesh ref={torusRef} scale={1.2}>
-          <torusKnotGeometry args={[1, 0.3, 256, 64, 2, 3]} />
+          <torusKnotGeometry args={[1, 0.3, 128, 32, 2, 3]} />
           <MeshDistortMaterial
             color="#0a0a20"
             roughness={0.1}
@@ -54,7 +54,7 @@ export default function HeroModel() {
 
         {/* Inner Icosahedron — wireframe core */}
         <mesh ref={innerRef} scale={0.6}>
-          <icosahedronGeometry args={[1, 1]} />
+          <icosahedronGeometry args={[1, 0]} />
           <meshStandardMaterial
             color="#00f0ff"
             emissive="#00f0ff"
@@ -67,7 +67,7 @@ export default function HeroModel() {
 
         {/* Orbital Ring 1 */}
         <mesh ref={ring1Ref} scale={2.2}>
-          <torusGeometry args={[1, 0.012, 16, 100]} />
+          <torusGeometry args={[1, 0.012, 12, 64]} />
           <meshStandardMaterial
             color="#8b5cf6"
             emissive="#8b5cf6"
@@ -79,7 +79,7 @@ export default function HeroModel() {
 
         {/* Orbital Ring 2 */}
         <mesh ref={ring2Ref} rotation={[Math.PI / 3, 0, 0]} scale={1.8}>
-          <torusGeometry args={[1, 0.008, 16, 100]} />
+          <torusGeometry args={[1, 0.008, 12, 64]} />
           <meshStandardMaterial
             color="#00f0ff"
             emissive="#00f0ff"
@@ -91,7 +91,7 @@ export default function HeroModel() {
 
         {/* Central glow sphere — blooms via post-processing */}
         <mesh scale={0.35}>
-          <sphereGeometry args={[1, 32, 32]} />
+          <sphereGeometry args={[1, 24, 24]} />
           <meshStandardMaterial
             color="#00f0ff"
             emissive="#00f0ff"
@@ -103,7 +103,7 @@ export default function HeroModel() {
 
         {/* Outer atmosphere halo */}
         <mesh scale={2.6}>
-          <sphereGeometry args={[1, 32, 32]} />
+          <sphereGeometry args={[1, 16, 16]} />
           <meshStandardMaterial
             color="#8b5cf6"
             emissive="#8b5cf6"

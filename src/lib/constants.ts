@@ -3,24 +3,28 @@ export const TEAM_NAME = "Totisteam";
 export const TEAM_MEMBERS = [
   {
     name: "Yankarlo Morán",
+    role: "Full Stack Developer",
     avatar: "/images/team/yankarlo.jpg",
     github: "https://github.com",
     linkedin: "https://linkedin.com",
   },
   {
     name: "Milton Mendoza",
+    role: "Backend Engineer",
     avatar: "/images/team/milton.jpg",
     github: "https://github.com",
     linkedin: "https://linkedin.com",
   },
   {
     name: "Mario De Leon",
+    role: "Game Developer",
     avatar: "/images/team/mario.jpg",
     github: "https://github.com",
     linkedin: "https://linkedin.com",
   },
   {
     name: "Alan Guevara",
+    role: "Frontend Developer",
     avatar: "/images/team/alan.jpg",
     github: "https://github.com",
     linkedin: "https://linkedin.com",
@@ -38,6 +42,7 @@ export const PROJECTS = [
     color: "#00f0ff",
     tags: ["Next.js", "Supabase", "TypeScript", "Vercel AI"],
     icon: "🏢",
+    // video: "/videos/abastto.mp4",  // ← Descomenta cuando tengas el video
   },
   {
     id: "karta",
@@ -49,6 +54,7 @@ export const PROJECTS = [
     color: "#f97316",
     tags: ["Next.js", "Supabase", "QR Generation", "PWA"],
     icon: "🍽️",
+    // video: "/videos/karta.mp4",  // ← Descomenta cuando tengas el video
   },
   {
     id: "nightfall",

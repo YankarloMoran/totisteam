@@ -13,6 +13,40 @@
   z-index: 1;
 }
 
+/* CSS Particles — visible everywhere including mobile */
+.cssParticles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cssParticle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  animation: particle-float 6s ease-in-out infinite;
+  opacity: 0;
+}
+
+.cssParticle:nth-child(even) {
+  background: var(--accent-violet);
+  box-shadow: 0 0 8px var(--accent-violet);
+  width: 2px;
+  height: 2px;
+}
+
+.cssParticle:nth-child(3n) {
+  background: var(--accent-pink);
+  box-shadow: 0 0 6px var(--accent-pink);
+  width: 2px;
+  height: 2px;
+}
+
 /* Gradient orbs */
 .orbCyan {
   position: absolute;
@@ -40,6 +74,19 @@
   animation: float 10s ease-in-out infinite reverse;
 }
 
+.orbPink {
+  position: absolute;
+  top: 60%;
+  right: 25%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  animation: float 12s ease-in-out infinite;
+}
+
 .content {
   position: relative;
   z-index: 2;
@@ -50,6 +97,7 @@
   max-width: 700px;
 }
 
+/* Badge with shimmer */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -62,6 +110,8 @@
   border: 1px solid rgba(0, 240, 255, 0.12);
   border-radius: 100px;
   margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .badgeDot {
@@ -70,6 +120,20 @@
   border-radius: 50%;
   background: var(--accent-cyan);
   animation: pulse-glow 2s ease-in-out infinite;
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.badgeShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 240, 255, 0.08) 50%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 3s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .title {
@@ -130,7 +194,7 @@
 .statDivider {
   width: 1px;
   height: 40px;
-  background: var(--border-subtle);
+  background: linear-gradient(180deg, transparent, var(--border-subtle), transparent);
 }
 
 /* Scroll Indicator */
@@ -148,6 +212,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+  animation: fade-in-up 1s ease-out 3s both;
 }
 
 .scrollMouse {
@@ -166,6 +231,7 @@
   background: var(--accent-cyan);
   border-radius: 100px;
   animation: scrollBounce 2s ease-in-out infinite;
+  box-shadow: 0 0 6px var(--accent-cyan);
 }
 
 @keyframes scrollBounce {
@@ -191,7 +257,7 @@
     font-size: 1.5rem;
   }
 
-  .orbCyan, .orbViolet {
+  .orbCyan, .orbViolet, .orbPink {
     display: none;
   }
 }

@@ -32,16 +32,40 @@ export default function LoadingScreen() {
     <div
       className={`${styles.loadingScreen} ${isComplete ? styles.complete : ""}`}
     >
+      {/* Animated particles */}
+      <div className={styles.particleField}>
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className={styles.particle}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${3 + Math.random() * 4}s`,
+              "--tx": `${(Math.random() - 0.5) * 150}px`,
+              "--ty": `${(Math.random() - 0.5) * 150}px`,
+            } as React.CSSProperties}
+          />
+        ))}
+      </div>
+
       {/* Background effects */}
       <div className={styles.bgOrb1} />
       <div className={styles.bgOrb2} />
+      <div className={styles.bgOrb3} />
 
       <div className={styles.content}>
         {/* Logo */}
         <div className={styles.logoWrapper}>
+          <div className={styles.logoRing}>
+            <div className={styles.logoRingInner} />
+          </div>
           <span className={styles.logoIcon}>✦</span>
-          <h1 className={styles.logoText}>{TEAM_NAME}</h1>
         </div>
+
+        <h1 className={styles.logoText}>{TEAM_NAME}</h1>
+        <p className={styles.tagline}>Creando experiencias digitales</p>
 
         {/* Progress bar */}
         <div className={styles.progressWrapper}>
@@ -59,11 +83,6 @@ export default function LoadingScreen() {
             {Math.round(progress)}%
           </span>
         </div>
-
-        {/* Loading text */}
-        <p className={styles.loadingText}>
-          Cargando experiencia...
-        </p>
       </div>
     </div>
   );
