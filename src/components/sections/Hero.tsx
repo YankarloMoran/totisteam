@@ -21,47 +21,60 @@ function seededRandom(seed: number): number {
 /**
  * Datos pre-calculados para las partículas CSS del hero.
  * Se generan una sola vez y son idénticos en servidor y cliente.
+ * Se usa toFixed para evitar errores de hidratación por diferencias de precisión en coma flotante.
  */
 const PARTICLE_DATA = Array.from({ length: 15 }, (_, i) => ({
-  left: `${10 + seededRandom(i * 7 + 1) * 80}%`,
-  top: `${10 + seededRandom(i * 7 + 2) * 80}%`,
-  animationDelay: `${seededRandom(i * 7 + 3) * 6}s`,
-  animationDuration: `${4 + seededRandom(i * 7 + 4) * 6}s`,
-  tx: `${(seededRandom(i * 7 + 5) - 0.5) * 120}px`,
-  ty: `${(seededRandom(i * 7 + 6) - 0.5) * 120}px`,
+  left: `${(10 + seededRandom(i * 7 + 1) * 80).toFixed(2)}%`,
+  top: `${(10 + seededRandom(i * 7 + 2) * 80).toFixed(2)}%`,
+  animationDelay: `${(seededRandom(i * 7 + 3) * 6).toFixed(2)}s`,
+  animationDuration: `${(4 + seededRandom(i * 7 + 4) * 6).toFixed(2)}s`,
+  tx: `${((seededRandom(i * 7 + 5) - 0.5) * 120).toFixed(2)}px`,
+  ty: `${((seededRandom(i * 7 + 6) - 0.5) * 120).toFixed(2)}px`,
 }));
 
 /**
- * Componente de contador animado que sube progresivamente hasta el número objetivo.
- * Soporta sufijo (ej: "+") y se sincroniza con la animación del hero.
+ * Componente de contador animado que sube progresivamente hasta el número objetivo
+ * usando requestAnimationFrame para máxima fluidez a 60fps.
  */
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (hasAnimated) return;
+    if (hasAnimated.current) return;
 
-    // Retraso para sincronizar con la animación del hero
+    let startTimestamp: number | null = null;
+    const duration = 2000; // 2 segundos
+    let animationFrameId: number;
+
+    const easeOutExpo = (x: number): number => {
+      return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+    };
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      
+      const easedProgress = easeOutExpo(progress);
+      setCount(Math.floor(easedProgress * target));
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(step);
+      } else {
+        setCount(target);
+      }
+    };
+
     const timeout = setTimeout(() => {
-      const duration = 1500;
-      const steps = 40;
-      const increment = target / steps;
-      let current = 0;
-      const interval = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          setCount(target);
-          clearInterval(interval);
-        } else {
-          setCount(Math.floor(current));
-        }
-      }, duration / steps);
-      setHasAnimated(true);
+      hasAnimated.current = true;
+      animationFrameId = requestAnimationFrame(step);
     }, 2800);
 
-    return () => clearTimeout(timeout);
-  }, [target, hasAnimated]);
+    return () => {
+      clearTimeout(timeout);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, [target]);
 
   return (
     <span className={styles.statNumber}>
@@ -72,35 +85,48 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 
 /**
  * Componente de contador especial para el infinito (∞).
- * Muestra números subiendo rápidamente y termina mostrando ∞.
+ * Muestra números subiendo fluida y rápidamente, y termina mostrando ∞.
  */
 function InfinityCounter() {
   const [display, setDisplay] = useState("0");
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (hasAnimated) return;
+    if (hasAnimated.current) return;
+
+    let startTimestamp: number | null = null;
+    const duration = 2000;
+    let animationFrameId: number;
+    const maxNum = 999;
+
+    const easeInExpo = (x: number): number => {
+      return x === 0 ? 0 : Math.pow(2, 10 * x - 10);
+    };
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      
+      if (progress < 1) {
+        // Usa easeIn para que acelere muy rápido al final
+        const currentVal = Math.floor(easeInExpo(progress) * maxNum);
+        setDisplay(String(currentVal));
+        animationFrameId = requestAnimationFrame(step);
+      } else {
+        setDisplay("∞");
+      }
+    };
 
     const timeout = setTimeout(() => {
-      // Secuencia de números que escalan rápidamente antes de mostrar ∞
-      const sequence = [1, 5, 12, 28, 57, 99, 174, 300, 512, 888, 999, "∞"];
-      let idx = 0;
-
-      const interval = setInterval(() => {
-        if (idx < sequence.length) {
-          setDisplay(String(sequence[idx]));
-          idx++;
-        }
-        if (idx >= sequence.length) {
-          clearInterval(interval);
-        }
-      }, 110);
-
-      setHasAnimated(true);
+      hasAnimated.current = true;
+      animationFrameId = requestAnimationFrame(step);
     }, 2800);
 
-    return () => clearTimeout(timeout);
-  }, [hasAnimated]);
+    return () => {
+      clearTimeout(timeout);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
 
   return (
     <span className={styles.statNumber}>

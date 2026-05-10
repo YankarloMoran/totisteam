@@ -5,19 +5,19 @@ export const TEAM_MEMBERS = [
     name: "Yankarlo Morán",
     role: "Full Stack Developer",
     avatar: "/images/team/yankarlo.jpg",
-    github: "https://github.com",
+    github: "https://github.com/YankarloMoran",
   },
   {
     name: "Milton Mendoza",
     role: "Backend Engineer",
     avatar: "/images/team/milton.jpg",
-    github: "https://github.com",
+    github: "https://github.com/Totis515",
   },
   {
     name: "Mario De Leon",
     role: "Game Developer",
     avatar: "/images/team/mario.jpg",
-    github: "https://github.com",
+    github: "https://github.com/mariorenedeleonramirez-cyber",
   },
   {
     name: "Alan Guevara",

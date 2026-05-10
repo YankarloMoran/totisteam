@@ -130,6 +130,16 @@
   gap: 1rem;
   width: max-content;
   animation: marquee 30s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.marqueeTrackGsap {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .marqueeTrack:hover {

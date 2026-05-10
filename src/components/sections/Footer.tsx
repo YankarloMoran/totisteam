@@ -1,13 +1,40 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { TEAM_NAME, TEAM_MEMBERS } from "@/lib/constants";
 import { useScrollReveal } from "@/hooks/useScrollAnimations";
 import styles from "./Footer.module.css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Footer() {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const ctx = gsap.context(() => {
+      // Animación fluida para los miembros del equipo (stagger)
+      gsap.fromTo(
+        `.${styles.memberLink}`,
+        { opacity: 0, y: 30, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "back.out(1.5)",
+          scrollTrigger: {
+            trigger: `.${styles.teamLinks}`,
+            start: "top 90%",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleBackToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -55,7 +82,7 @@ export default function Footer() {
         </div>
 
         {/* Enlaces del equipo */}
-        <div className={styles.teamLinks} data-reveal>
+        <div className={styles.teamLinks}>
           {TEAM_MEMBERS.map((member) => (
             <div key={member.name} className={styles.memberLink}>
               <div className={styles.memberAvatar}>
