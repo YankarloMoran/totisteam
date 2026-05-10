@@ -67,8 +67,10 @@ export default function TechStack() {
       };
 
       // Animaciones mucho más lentas y fluidas (80 segundos para recorrer la mitad)
-      animateTrack(track1Ref.current, 1, 80);
-      animateTrack(track2Ref.current, -1, 80);
+      if (track1Ref.current && track2Ref.current) {
+        animateTrack(track1Ref.current, 1, 80);
+        animateTrack(track2Ref.current, -1, 80);
+      }
 
       // Efecto hover para pausar las animaciones
       const handleMouseEnter = () => gsap.globalTimeline.pause();
