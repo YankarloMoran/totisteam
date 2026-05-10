@@ -39,7 +39,7 @@ export default function HeroModel() {
   return (
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
       <group position={[1.5, 0, 0]}>
-        {/* Main Torus Knot — reduced geometry for performance */}
+        {/* Torus Knot principal — geometría reducida para mejor rendimiento */}
         <mesh ref={torusRef} scale={1.2}>
           <torusKnotGeometry args={[1, 0.3, 128, 32, 2, 3]} />
           <MeshDistortMaterial
@@ -52,7 +52,7 @@ export default function HeroModel() {
           />
         </mesh>
 
-        {/* Inner Icosahedron — wireframe core */}
+        {/* Icosaedro interior — núcleo de malla de alambre */}
         <mesh ref={innerRef} scale={0.6}>
           <icosahedronGeometry args={[1, 0]} />
           <meshStandardMaterial
@@ -65,7 +65,7 @@ export default function HeroModel() {
           />
         </mesh>
 
-        {/* Orbital Ring 1 */}
+        {/* Anillo orbital 1 */}
         <mesh ref={ring1Ref} scale={2.2}>
           <torusGeometry args={[1, 0.012, 12, 64]} />
           <meshStandardMaterial
@@ -77,7 +77,7 @@ export default function HeroModel() {
           />
         </mesh>
 
-        {/* Orbital Ring 2 */}
+        {/* Anillo orbital 2 */}
         <mesh ref={ring2Ref} rotation={[Math.PI / 3, 0, 0]} scale={1.8}>
           <torusGeometry args={[1, 0.008, 12, 64]} />
           <meshStandardMaterial
@@ -89,7 +89,7 @@ export default function HeroModel() {
           />
         </mesh>
 
-        {/* Central glow sphere — blooms via post-processing */}
+        {/* Esfera central brillante — efecto de resplandor mediante post-procesamiento */}
         <mesh scale={0.35}>
           <sphereGeometry args={[1, 24, 24]} />
           <meshStandardMaterial
@@ -101,7 +101,7 @@ export default function HeroModel() {
           />
         </mesh>
 
-        {/* Outer atmosphere halo */}
+        {/* Halo atmosférico exterior */}
         <mesh scale={2.6}>
           <sphereGeometry args={[1, 16, 16]} />
           <meshStandardMaterial

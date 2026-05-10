@@ -155,6 +155,16 @@
   background-clip: text;
 }
 
+.avatarImage {
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.card:hover .avatarImage {
+  transform: scale(1.08);
+}
+
 /* Online status dot */
 .statusDot {
   position: absolute;

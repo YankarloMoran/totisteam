@@ -21,12 +21,26 @@
   gap: 1.5rem;
 }
 
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  border-radius: 20px;
+  transition: transform var(--transition-fast);
+}
+
+.cardLink:hover {
+  transform: translateY(-4px);
+}
+
 .card {
   position: relative;
   padding: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  width: 100%;
 }
 
 /* Project number watermark */

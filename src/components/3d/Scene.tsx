@@ -35,7 +35,7 @@ export default function Scene() {
         <HeroModel />
         <FloatingParticles count={100} />
 
-        {/* Post-processing effects — reduced for performance */}
+        {/* Efectos de post-procesamiento — reducidos para mejor rendimiento */}
         <EffectComposer multisampling={0}>
           <Bloom
             luminanceThreshold={0.3}

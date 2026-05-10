@@ -7,8 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Hook to create scroll-triggered reveal animations.
- * Animates all [data-reveal] children with staggered fade-in-up.
+ * Hook para crear animaciones de revelado activadas por el scroll.
+ * Anima todos los hijos [data-reveal] con una aparición gradual escalonada hacia arriba.
  */
 export function useScrollReveal(ref: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -46,7 +46,7 @@ export function useScrollReveal(ref: RefObject<HTMLElement | null>) {
 }
 
 /**
- * Hook to create parallax effect on background elements.
+ * Hook para crear efecto parallax en elementos de fondo.
  */
 export function useParallax(
   ref: RefObject<HTMLElement | null>,
@@ -78,7 +78,7 @@ export function useParallax(
 }
 
 /**
- * Hook for staggered children animations.
+ * Hook para animaciones escalonadas de los hijos.
  */
 export function useStaggerReveal(
   ref: RefObject<HTMLElement | null>,
@@ -120,7 +120,7 @@ export function useStaggerReveal(
 }
 
 /**
- * Hook for hero section: title text split animation.
+ * Hook para la sección hero: animación de división de texto del título.
  */
 export function useHeroAnimation(ref: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -128,30 +128,19 @@ export function useHeroAnimation(ref: RefObject<HTMLElement | null>) {
     if (!el) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 1.5 }); // Wait for loading screen
+      const tl = gsap.timeline({ delay: 1.5 }); // Esperar a la pantalla de carga
 
-      // Badge
+      // Insignia
       tl.fromTo(
         "[data-animate-badge]",
         { opacity: 0, y: 20, scale: 0.9 },
         { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }
       );
 
-      // Title words
-      tl.fromTo(
-        "[data-animate-title]",
-        { opacity: 0, y: 60, clipPath: "inset(100% 0 0 0)" },
-        {
-          opacity: 1,
-          y: 0,
-          clipPath: "inset(0% 0 0 0)",
-          duration: 1,
-          ease: "power4.out",
-        },
-        "-=0.3"
-      );
+      // El título ahora usa su propio efecto typewriter interno,
+      // así que no se necesita animación GSAP para él.
 
-      // Subtitle
+      // Subtítulo
       tl.fromTo(
         "[data-animate-subtitle]",
         { opacity: 0, y: 30 },
@@ -159,7 +148,7 @@ export function useHeroAnimation(ref: RefObject<HTMLElement | null>) {
         "-=0.5"
       );
 
-      // CTA buttons
+      // Botones CTA
       tl.fromTo(
         "[data-animate-cta]",
         { opacity: 0, y: 20 },
@@ -167,7 +156,7 @@ export function useHeroAnimation(ref: RefObject<HTMLElement | null>) {
         "-=0.3"
       );
 
-      // Stats
+      // Estadísticas
       tl.fromTo(
         "[data-animate-stats]",
         { opacity: 0, y: 20 },

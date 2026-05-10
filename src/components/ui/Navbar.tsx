@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#hero");
 
-  // Scroll detection
+  // Detección de scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -19,7 +19,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Active section detection via IntersectionObserver
+  // Detección de sección activa vía IntersectionObserver
   useEffect(() => {
     const sectionIds = NAV_LINKS.map((l) => l.href.replace("#", ""));
     const observers: IntersectionObserver[] = [];
@@ -43,7 +43,7 @@ export default function Navbar() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Bloquear scroll del body cuando el menú móvil está abierto
   useEffect(() => {
     if (isMobileOpen) {
       document.body.style.overflow = "hidden";
@@ -83,7 +83,7 @@ export default function Navbar() {
           <span className={styles.logoText}>{TEAM_NAME}</span>
         </a>
 
-        {/* Desktop Links */}
+        {/* Enlaces de escritorio */}
         <ul className={styles.navLinks}>
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
@@ -100,7 +100,7 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Hamburger Button */}
+        {/* Botón de hamburguesa */}
         <button
           className={`${styles.hamburger} ${isMobileOpen ? styles.hamburgerOpen : ""}`}
           onClick={() => setIsMobileOpen(!isMobileOpen)}
@@ -113,7 +113,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Capa superpuesta del menú móvil */}
       <div
         className={`${styles.mobileOverlay} ${isMobileOpen ? styles.mobileOpen : ""}`}
       >

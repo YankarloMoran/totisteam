@@ -23,7 +23,7 @@ export default function CustomCursor() {
   }, []);
 
   useEffect(() => {
-    // Don't show on touch devices
+    // No mostrar en dispositivos táctiles
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const cursor = cursorRef.current;
@@ -45,7 +45,7 @@ export default function CustomCursor() {
     document.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("mouseenter", handleMouseEnter);
 
-    // Add hover effect to interactive elements
+    // Agregar efecto hover a elementos interactivos
     const interactiveElements = document.querySelectorAll(
       "a, button, [role='button'], .glass-card"
     );
@@ -54,11 +54,11 @@ export default function CustomCursor() {
       el.addEventListener("mouseleave", handleMouseLeaveInteractive);
     });
 
-    // Start animation loop
+    // Iniciar ciclo de animación
     rafRef.current = requestAnimationFrame(animateTrail);
 
     return () => {
-      // Properly cancel the RAF loop
+      // Cancelar correctamente el ciclo RAF
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);

@@ -30,7 +30,7 @@ export default function TechStack() {
   const sectionRef = useRef<HTMLElement>(null);
   useScrollReveal(sectionRef);
 
-  // Double the array for seamless infinite scroll
+  // Duplicar el array para un scroll infinito continuo
   const doubledStack = [...TECH_STACK, ...TECH_STACK];
 
   return (
@@ -39,7 +39,7 @@ export default function TechStack() {
       className={`section ${styles.techStack}`}
       id="tech"
     >
-      {/* Ambient glow */}
+      {/* Resplandor ambiental */}
       <div className={styles.ambientGlow} />
 
       <div className="container">
@@ -57,7 +57,7 @@ export default function TechStack() {
         </div>
       </div>
 
-      {/* Central nucleus */}
+      {/* Núcleo central */}
       <div className={styles.nucleusContainer} data-reveal>
         <div className={styles.nucleus}>
           <div className={styles.nucleusInner}>
@@ -69,13 +69,13 @@ export default function TechStack() {
         </div>
       </div>
 
-      {/* Marquee rows */}
+      {/* Filas de la marquesina */}
       <div className={styles.marqueeContainer}>
-        {/* Fade edges */}
+        {/* Bordes desvanecidos */}
         <div className={styles.fadeLeft} />
         <div className={styles.fadeRight} />
 
-        {/* Row 1 — scrolls left */}
+        {/* Fila 1 — se desplaza a la izquierda */}
         <div className={styles.marqueeRow}>
           <div className={styles.marqueeTrack}>
             {doubledStack.map((tech, i) => (
@@ -84,7 +84,7 @@ export default function TechStack() {
           </div>
         </div>
 
-        {/* Row 2 — scrolls right */}
+        {/* Fila 2 — se desplaza a la derecha */}
         <div className={styles.marqueeRow}>
           <div className={`${styles.marqueeTrack} ${styles.marqueeReverse}`}>
             {[...doubledStack].reverse().map((tech, i) => (

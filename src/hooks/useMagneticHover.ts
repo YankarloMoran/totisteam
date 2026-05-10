@@ -3,8 +3,8 @@
 import { useEffect, useRef, RefObject } from "react";
 
 /**
- * Hook to add a 3D tilt/magnetic hover effect to elements.
- * The element tilts toward the mouse position, creating a perspective effect.
+ * Hook para añadir un efecto de inclinación/hover magnético 3D a los elementos.
+ * El elemento se inclina hacia la posición del ratón, creando un efecto de perspectiva.
  */
 export function useMagneticHover(
   ref: RefObject<HTMLElement | null>,
@@ -44,11 +44,11 @@ export function useMagneticHover(
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        // Normalized position from -1 to 1
+        // Posición normalizada de -1 a 1
         const x = (e.clientX - centerX) / (rect.width / 2);
         const y = (e.clientY - centerY) / (rect.height / 2);
 
-        // Clamp values
+        // Limitar valores
         const clampedX = Math.max(-1, Math.min(1, x));
         const clampedY = Math.max(-1, Math.min(1, y));
 
@@ -62,7 +62,7 @@ export function useMagneticHover(
         el.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
         el.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
 
-        // Reset transition speed after animation
+        // Restablecer la velocidad de transición después de la animación
         setTimeout(() => {
           el.style.transition = "transform 0.1s ease-out";
         }, 500);

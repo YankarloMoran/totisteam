@@ -19,7 +19,7 @@ export default function Footer() {
 
   return (
     <footer ref={sectionRef} className={styles.footer} id="contact">
-      {/* Aurora Borealis effect — enhanced */}
+      {/* Efecto de aurora boreal — mejorado */}
       <div className={styles.aurora}>
         <div className={styles.auroraLayer1} />
         <div className={styles.auroraLayer2} />
@@ -27,7 +27,7 @@ export default function Footer() {
       </div>
 
       <div className={`container ${styles.content}`}>
-        {/* Main CTA */}
+        {/* CTA Principal */}
         <div className={styles.ctaBlock} data-reveal>
           <span className="section-subtitle">¿Listo para colaborar?</span>
           <h2>
@@ -39,7 +39,7 @@ export default function Footer() {
             oportunidades. ¡Contáctanos!
           </p>
 
-          {/* Animated CTA button */}
+          {/* Botón CTA animado */}
           <div className={styles.ctaButtons} data-reveal>
             <a href="mailto:totisteam@gmail.com" className={styles.ctaButton}>
               <span className={styles.ctaButtonGlow} />
@@ -54,7 +54,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Team links */}
+        {/* Enlaces del equipo */}
         <div className={styles.teamLinks} data-reveal>
           {TEAM_MEMBERS.map((member) => (
             <div key={member.name} className={styles.memberLink}>
@@ -73,26 +73,16 @@ export default function Footer() {
                   >
                     GitHub
                   </a>
-                  <span className={styles.dot}>·</span>
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialIcon}
-                    aria-label={`LinkedIn de ${member.name}`}
-                  >
-                    LinkedIn
-                  </a>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Divider */}
+        {/* Divisor */}
         <div className={styles.divider} data-reveal />
 
-        {/* Bottom bar */}
+        {/* Barra inferior */}
         <div className={styles.bottom} data-reveal>
           <div className={styles.brand}>
             <span className={styles.brandIcon}>✦</span>
