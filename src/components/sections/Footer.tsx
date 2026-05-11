@@ -84,25 +84,21 @@ export default function Footer() {
         {/* Enlaces del equipo */}
         <div className={styles.teamLinks}>
           {TEAM_MEMBERS.map((member) => (
-            <div key={member.name} className={styles.memberLink}>
+            <a
+              key={member.name}
+              href={member.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.memberLink}
+            >
               <div className={styles.memberAvatar}>
                 <span>{member.name.charAt(0)}</span>
               </div>
               <div className={styles.memberInfo}>
                 <span className={styles.memberName}>{member.name}</span>
-                <div className={styles.memberSocials}>
-                  <a
-                    href={member.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialIcon}
-                    aria-label={`GitHub de ${member.name}`}
-                  >
-                    GitHub
-                  </a>
-                </div>
+                <span className={styles.memberSocials}>GitHub</span>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 

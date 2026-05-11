@@ -9,19 +9,19 @@ export const TEAM_MEMBERS = [
   },
   {
     name: "Milton Mendoza",
-    role: "Backend Engineer",
+    role: "Game Developer",
     avatar: "/images/team/milton.jpg",
     github: "https://github.com/Totis515",
   },
   {
     name: "Mario De Leon",
-    role: "Game Developer",
+    role: "Sound Designer & Creative Developer",
     avatar: "/images/team/mario.jpg",
     github: "https://github.com/mariorenedeleonramirez-cyber",
   },
   {
     name: "Alan Guevara",
-    role: "Frontend Developer",
+    role: "Game Developer",
     avatar: "/images/team/alan.jpg",
     github: "https://github.com",
   },
