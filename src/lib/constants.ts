@@ -50,7 +50,7 @@ export const PROJECTS = [
     color: "#f97316",
     tags: ["Next.js", "Supabase", "QR Generation", "PWA"],
     icon: "🍽️",
-    // video: "/videos/karta.mp4",  // ← Descomenta cuando tengas el video
+    video: "/videos/karta.mp4",
   },
   {
     id: "nightfall",
