@@ -92,7 +92,15 @@ export default function Footer() {
               className={styles.memberLink}
             >
               <div className={styles.memberAvatar}>
-                <span>{member.name.charAt(0)}</span>
+                {member.avatar ? (
+                  <img
+                    src={member.avatar}
+                    alt={member.name}
+                    className={styles.avatarImg}
+                  />
+                ) : (
+                  <span>{member.name.charAt(0)}</span>
+                )}
               </div>
               <div className={styles.memberInfo}>
                 <span className={styles.memberName}>{member.name}</span>
@@ -109,12 +117,23 @@ export default function Footer() {
         <div className={styles.bottom} data-reveal>
           <div className={styles.brand}>
             <span className={styles.brandIcon}>✦</span>
-            <span className={styles.brandName}>{TEAM_NAME}</span>
+            <div className={styles.brandInfo}>
+              <span className={styles.brandName}>{TEAM_NAME}</span>
+              <span className={styles.brandTagline}>Innovación Digital</span>
+            </div>
           </div>
-          <p className={styles.copyright}>
-            © {new Date().getFullYear()} {TEAM_NAME}. Todos los derechos
-            reservados.
-          </p>
+          
+          <div className={styles.footerLinks}>
+            <p className={styles.copyright}>
+              © {new Date().getFullYear()} {TEAM_NAME}. Todos los derechos
+              reservados.
+            </p>
+            <div className={styles.legalLinks}>
+              <a href="#">Privacidad</a>
+              <a href="#">Términos</a>
+            </div>
+          </div>
+
           <div className={styles.backToTop}>
             <a
               href="#hero"

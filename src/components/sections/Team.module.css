@@ -194,7 +194,12 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   opacity: 0.8;
-  margin-top: -0.5rem;
+  margin-top: -0.25rem;
+  min-height: 2.5rem; /* Asegura espacio para 2 líneas */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 /* Member number watermark */
