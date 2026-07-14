@@ -27,7 +27,20 @@ export const TEAM_MEMBERS = [
   },
 ];
 
-export const PROJECTS = [
+export interface Project {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  url: string;
+  color: string;
+  tags: string[];
+  icon: string;
+  video?: string;
+  image?: string;
+}
+
+export const PROJECTS: Project[] = [
   {
     id: "abastto",
     title: "Abastto",
@@ -75,6 +88,30 @@ export const PROJECTS = [
     tags: ["Fighter", "Rhythm Mechanics", "WebGL 2.0", "Phaser 3"],
     icon: "🔥",
     video: "/videos/jjk-clash.mp4",
+  },
+  {
+    id: "proserco",
+    title: "PROSERCO",
+    subtitle: "Soluciones Contables Integrales",
+    description:
+      "Sitio web corporativo premium para una firma de contadores públicos y consultores financieros. Incluye simuladores fiscales interactivos (ISR, IVA, IGSS, Salud Financiera) y portal de clientes.",
+    url: "https://proserco.vercel.app/",
+    color: "#d4af37",
+    tags: ["React", "Tailwind CSS", "Vite", "Simulador Fiscal"],
+    icon: "💼",
+    image: "/images/projects/proserco.jpg",
+  },
+  {
+    id: "flower-studio",
+    title: "Flower Studio",
+    subtitle: "Cozy Lofi Art Generator",
+    description:
+      "Generador interactivo de arte botánico en HTML5 Canvas mediante algoritmos de gráficos de tortuga. Incluye reproductor de música lofi, creador de dedicatorias con IA y exportador de código Python.",
+    url: "https://flower-studio-chi.vercel.app/",
+    color: "#f472b6",
+    tags: ["HTML5 Canvas", "Lofi Player", "AI Poetry", "Python Turtle"],
+    icon: "🌸",
+    image: "/images/projects/flower-studio.jpg",
   },
 ];
 

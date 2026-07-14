@@ -23,6 +23,7 @@ function ProjectCard({
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isVideoVisible, setIsVideoVisible] = useState(false);
   const hasVideo = "video" in project && project.video;
+  const hasImage = "image" in project && project.image;
 
   // Carga perezosa del video cuando es visible en el viewport
   useEffect(() => {
@@ -83,7 +84,7 @@ function ProjectCard({
           style={{ background: `linear-gradient(90deg, ${project.color}, ${project.color}80)` }}
         />
 
-        {/* Vista previa de video O Emoji de respaldo */}
+        {/* Vista previa de video O Imagen O Emoji de respaldo */}
         {hasVideo ? (
           <div
             ref={videoBoxRef}
@@ -125,6 +126,22 @@ function ProjectCard({
               </svg>
             </div>
 
+            {/* Resplandor del borde */}
+            <div
+              className={styles.videoGlow}
+              style={{
+                boxShadow: `inset 0 0 0 1px ${project.color}30, 0 0 20px ${project.color}10`,
+              }}
+            />
+          </div>
+        ) : hasImage ? (
+          <div className={styles.videoBox}>
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              className={styles.image}
+            />
             {/* Resplandor del borde */}
             <div
               className={styles.videoGlow}
