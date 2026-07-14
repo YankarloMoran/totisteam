@@ -113,6 +113,18 @@ export const PROJECTS: Project[] = [
     icon: "🌸",
     image: "/images/projects/flower-studio.jpg",
   },
+  {
+    id: "lundertale",
+    title: "LUNDERTALE",
+    subtitle: "Undertale Fan Game",
+    description:
+      "Juego fan de Undertale desarrollado con un motor de combate personalizado en HTML5 Canvas. Enfréntate a batallas contra jefes icónicos de la cultura pop como Godzilla, Darth Vader, Sachiel y Bill Cipher, esquivando complejos patrones de proyectiles al ritmo de la música.",
+    url: "https://lundertale.vercel.app/",
+    color: "#ef4444",
+    tags: ["JavaScript", "HTML5 Canvas", "Undertale Fangame", "Boss Fight"],
+    icon: "❤️",
+    image: "/images/projects/lundertale.jpg",
+  },
 ];
 
 export const TECH_STACK = [
